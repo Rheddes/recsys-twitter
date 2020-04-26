@@ -21,5 +21,8 @@ def create_attention_mask_from(input_tensor):
     return torch.arange(input_tensor.size(1))[None, :] < input_tensor[:, None]
 
 
-def get_bert_classification_vectors(hidden_states):
-    return hidden_states[0][:, 0, :].numpy()
+def get_bert_classification_vectors(hidden_states, use_cuda=False):
+    if use_cuda:
+        return hidden_states[0][:, 0, :].to('cpu').numpy()
+    else:
+        return hidden_states[0][:, 0, :].numpy()
