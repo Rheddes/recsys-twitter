@@ -5,18 +5,17 @@ import numpy as np
 
 
 class MyIterableDataset(IterableDataset):
+    TOKENS_INDEX = 0
+    REPLIED_INDEX = 1
+    RETWEETED_INDEX = 2
+    RETWEETED_WITH_COMMENT_INDEX = 3
+    LIKE_INDEX = 4
+
     def __init__(self, file_path):
         self.max_token_len = pd.read_csv(file_path, header=None)[0].apply(lambda x: x.count("\t") + 1).max()
         self.file_path = file_path
 
     def parse_file(self, file_path):
-        indices = {
-            "text_tokens": 0,
-            "replied": 20,
-            "retweeted": 21,
-            "retweeted_with_comment": 22,
-            "liked": 23,
-        }
         with open(file_path, encoding="utf-8") as fileobject:
             for line in fileobject:
                 features = line.strip().split("\x01")
