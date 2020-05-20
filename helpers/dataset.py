@@ -30,7 +30,7 @@ class MyIterableDataset(IterableDataset):
                 ]
 
     def get_stream(self, file_path):
-        return cycle(self.parse_file(file_path))
+        return self.parse_file(file_path)
 
     def __iter__(self):
         return self.get_stream(self.file_path)
@@ -56,7 +56,7 @@ class PredictionDataset(IterableDataset):
                 yield [pad(tokens, self.max_token_len)]
 
     def get_stream(self, file_path):
-        return cycle(self.parse_file(file_path))
+        return self.parse_file(file_path)
 
     def __iter__(self):
         return self.get_stream(self.file_path)
